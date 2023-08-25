@@ -3,6 +3,7 @@ package usecase
 import (
 	"debugpedia-api/model"
 	"debugpedia-api/repository"
+	"debugpedia-api/validator"
 )
 
 type IDebugUsecase interface {
@@ -15,10 +16,11 @@ type IDebugUsecase interface {
 
 type debugUsecase struct {
 	dr repository.IDebugRepository
+	dv validator.IDebugValidator
 }
 
-func NewDebugUsecase(dr repository.IDebugRepository) IDebugUsecase {
-	return &debugUsecase{dr}
+func NewDebugUsecase(dr repository.IDebugRepository, dv validator.IDebugValidator) IDebugUsecase {
+	return &debugUsecase{dr, dv}
 }
 
 func (du *debugUsecase) GetAllDebugs(userId uint) ([]model.DebugResponse, error) {
@@ -65,6 +67,9 @@ func (du *debugUsecase) GetDebugById(userId uint, debugId uint) (model.DebugResp
 }
 
 func (du *debugUsecase) CreateDebug(debug model.Debug) (model.DebugResponse, error) {
+	if err := du.dv.DebugValidate(debug); err != nil {
+		return model.DebugResponse{}, err
+	}
 	if err := du.dr.CreateDebug(&debug); err != nil {
 		return model.DebugResponse{}, err
 	}
