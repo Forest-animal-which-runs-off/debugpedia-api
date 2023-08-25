@@ -3,6 +3,8 @@ module debugpedia-api
 go 1.20
 
 require (
+	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible
+	github.com/go-ozzo/ozzo-validation/v4 v4.3.0
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo-jwt/v4 v4.1.0
@@ -13,7 +15,10 @@ require (
 	gorm.io/gorm v1.25.4
 )
 
-require golang.org/x/time v0.3.0 // indirect
+require (
+	github.com/asaskevich/govalidator v0.0.0-20200108200545-475eaeb16496 // indirect
+	golang.org/x/time v0.3.0 // indirect
+)
 
 require (
 	github.com/golang-jwt/jwt/v4 v4.5.0
