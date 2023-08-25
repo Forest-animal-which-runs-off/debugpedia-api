@@ -10,6 +10,15 @@ import (
 
 func NewRouter(uc controller.IUserController, dc controller.IDebugController) *echo.Echo {
 	e := echo.New()
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"http://localhost:4000", os.Getenv("FE_URL")},
+		// ヘッダー経由でcsrfトークンを受け取れるようにする。
+		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept,
+			echo.HeaderAccessControlAllowHeaders, echo.HeaderXCSRFToken},
+		AllowMethods: []string{"GET", "PUT", "POST", "DELETE"},
+		// cookieの送受信を可能にする。
+		AllowCredentials: true,
+	}))
 	e.POST("/signup", uc.SignUp)
 	e.POST("/login", uc.Login)
 	e.POST("/logout", uc.Logout)
