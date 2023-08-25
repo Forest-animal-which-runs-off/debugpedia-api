@@ -1,15 +1,18 @@
 package main
 
 import (
+	"debugpedia-api/controller"
 	"debugpedia-api/db"
-	"debugpedia-api/model"
-	"fmt"
+	"debugpedia-api/repository"
+	"debugpedia-api/router"
+	"debugpedia-api/usecase"
 )
 
-func main(){
-	dbConn := db.NewDB()
-	defer fmt.Println("Successfully Migrated")
-	defer db.CloseDB(dbConn)
-	// dbに反映させたいモデル構造をアフィールドの値を0値でインスタンスし、アンバサンドで渡す。
-	dbConn.AutoMigrate(&model.User{},&model.Debug{})
+func main() {
+	db := db.NewDB()
+	userRepository := repository.NewUserRepository(db)
+	userUsecase := usecase.NewUserUsecase(userRepository)
+	userController := controller.NewUserController(userUsecase)
+	e := router.NewRouter(userController)
+	e.Logger.Fatal(e.Start(":8080"))
 }
