@@ -26,9 +26,9 @@ func NewRouter(uc controller.IUserController, dc controller.IDebugController) *e
 		CookiePath:     "/",
 		CookieDomain:   os.Getenv("API_DOMAIN"),
 		CookieHTTPOnly: true,
-		// CookieSameSite: http.SameSiteNoneMode,
+		CookieSameSite: http.SameSiteNoneMode,
 		// postmanで動作確認するにはセキュア属性をfalseにしないといけないが、smaeSiteNoneModeだと勝手にtrueになる
-		CookieSameSite: http.SameSiteDefaultMode,
+		// CookieSameSite: http.SameSiteDefaultMode,
 		CookieMaxAge: 60,
 	}))
 
