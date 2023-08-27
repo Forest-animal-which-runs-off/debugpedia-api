@@ -49,7 +49,7 @@ func (uu *userUsecase) SignUp(user model.User) (model.UserResponse, error) {
 func (uu *userUsecase) Login(user model.User) (string, error) {
 	storedUser := model.User{}
 	if err := uu.ur.GetUserByEmail(&storedUser, user.Email); err != nil {
-		return "", nil
+		return "", err
 	}
 	err := bcrypt.CompareHashAndPassword([]byte(storedUser.Password), []byte(user.Password))
 	if err != nil {
