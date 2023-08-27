@@ -51,7 +51,7 @@ func (uc *userController) Login(c echo.Context) error {
 	cookie.Path = "/"
 	cookie.Domain = os.Getenv("API_DOMAIN")
 	// NOTE:POSTmanを使う時はsecureをfalseにする
-	cookie.Secure = true
+	// cookie.Secure = true
 	cookie.HttpOnly = true
 	cookie.SameSite = http.SameSiteNoneMode
 	c.SetCookie(cookie)
