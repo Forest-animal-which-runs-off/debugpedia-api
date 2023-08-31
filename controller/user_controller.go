@@ -49,9 +49,9 @@ func (uc *userController) Login(c echo.Context) error {
 	cookie.Value = tokenString
 	cookie.Expires = time.Now().Add(24 * time.Hour)
 	cookie.Path = "/"
-	cookie.Domain = os.Getenv("API_DOMAIN")
+	// cookie.Domain = os.Getenv("API_DOMAIN")
 	// NOTE:POSTmanを使う時はsecureをfalseにする
-	cookie.Secure = true
+	cookie.Secure = false
 	cookie.HttpOnly = true
 	cookie.SameSite = http.SameSiteLaxMode
 	c.SetCookie(cookie)
@@ -66,7 +66,7 @@ func (uc *userController) Logout(c echo.Context) error {
 	cookie.Expires = time.Now()
 	cookie.Path = "/"
 	cookie.Domain = os.Getenv("API_DOMAIN")
-	cookie.Secure = true
+	// cookie.Secure = true
 	cookie.HttpOnly = true
 	cookie.SameSite = http.SameSiteNoneMode
 	c.SetCookie(cookie)
